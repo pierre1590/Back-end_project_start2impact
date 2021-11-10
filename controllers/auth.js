@@ -11,7 +11,7 @@ exports.loginUser = (req,res,next) => {
 
     if(!errors.isEmpty()){
         return res.status(422).json({
-            message : 'Error input Parametri',
+            message : 'Error input ',
             error : errors.array()
         });
     }

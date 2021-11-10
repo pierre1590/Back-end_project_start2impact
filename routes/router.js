@@ -2,10 +2,10 @@ const express = require('express');
 const { body,query } = require('express-validator/check');
 const router = express.Router();
 
-const authController = require('../controllers/auth');
+const authController = require('../controllers/auth.js');
 const User = require('../models/user');
 
-const isAuth = require('../middleware/is-auth');
+const isAuth = require('../middleware/is-auth.js');
 
 
 //POST /auth/register
