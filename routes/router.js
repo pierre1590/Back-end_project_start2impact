@@ -1,26 +1,35 @@
 const express = require('express');
+const { body,query } = require('express-validator/check');
 const router = express.Router();
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 
-const db = require('../utils/db.js');
-const userMiddleware = require('../middleware/users.js');
+const authController = require('../controllers/auth');
+const User = require('../models/user');
 
-//ENDPOINT SIGNUP
-// http://localhost:3000/auth/signup
-router.post('/signup', (req, res,next) => {
-
-});
-
-//ENDPOINT LOGIN
-// http://localhost:3000/auth/login
-router.post('/login', (req, res,next) => {
-
-});
+const isAuth = require('../middleware/is-auth');
 
 
-//ENDPOINT SECRET  ROUTE
-// http://localhost:3000/auth/secret
-router.post('/secret', (req, res,next) => {
+//POST /auth/register
+router.post('/register',
+    [
+        body('email').isEmail().withMessage('')
+        .custom((value,{ req }) => {
+            return User.findOne( { where : { email : value}}).then(user => {
+                if(user){
+                    return Promise.reject('Email Esistente!!!');
+                }
+            })
+        }),
+        body('password').trim().isLength({ min : 5}).withMessage('Password > 5 Caratteri'),
+    ],
+    authController.registerUser);
 
-});
+router.post('/login',
+    [
+        body('email').isEmail().withMessage('Inserisci una mail valida name@server.com'),
+        body('password').trim().isLength({ min : 5}).withMessage('Password > 5 Caratteri')
+    ],
+   authController.loginUser);
+
+
+
+module.exports = router;
