@@ -1,37 +1,27 @@
 const express = require('express');
-const router = express.Router();
+const cors = require('cors');
 const bodyParser = require('body-parser');
-
-const sequelize = require('./utils/db');
-
 const app = express();
 
-app.use(bodyParser.json()); //application/json
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json())
+app.use(cors());
 
-app.use((req,res,next) => {
-    res.setHeader('Access-Control-Allow-Origin','*');
-    res.setHeader('Access-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE');
-    res.setHeader('Access-Control-Allow-Headers','Content-Type,Authorization');
-    next();
+const db = require('../utils/db.js');
+// force: true will drop the table if it already exists
+ db.sequelize.sync({force: true}).then(() => {
+    console.log('Drop and Resync with { force: true }');
 });
 
-//Routing
-app.use('/auth',router);
-
-
-const User = require('./models/user');
-
-sequelize.authenticate().then( rec => {
-    console.log('Connection Established Successfully');
-    //sequelize.sync({force:true})
-    sequelize.sync()
-    .then(user => {
-        console.log('Sync to DB with Success');
-    }).catch( err => {
-        console.log('Sync to DB Error:',err);
-    });
-}).catch( err => {
-     console.log('Connection to DB Error:',err);
+// api routes
+app.get('/',(req,res)=>{
+        res.json({messagge: "Welcome to my App"});
 });
+    
+require('../routes/router.js')(app);
 
-app.listen(process.env.PORT || 5000);
+// set port
+const PORT = process.env.PORT || 5000;
+app.listen(PORT,()=>{
+    console.log(`Server is running on port ${PORT}`);
+});

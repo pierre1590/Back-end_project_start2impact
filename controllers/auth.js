@@ -40,7 +40,7 @@ exports.loginUser = (req,res,next) => {
             {
                 id : loginUser.id,
                 email : loginUser.email,
-            },'',{expiresIn : '1h'});
+            },'lYGkT0IQfjylJLRm6aDTgSBrrp7GeU48',{expiresIn : '1h'});
 
         res.status(201).json({ 
             messages : 'You are logged in successfully',

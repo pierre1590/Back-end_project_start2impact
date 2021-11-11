@@ -16,7 +16,7 @@ module.exports = (req,res,next) => {
     const token = auth.split(' ')[1];
     let decode;
     try{
-        decode = jwt.verify(token,'');
+        decode = jwt.verify(token,'lYGkT0IQfjylJLRm6aDTgSBrrp7GeU48');
     }catch (err){
         return res.status(500).json({
             message : 'Non autorizzato!!!'
