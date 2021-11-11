@@ -7,4 +7,12 @@ process.env.NODE_DATABASE_PW,{
     host : process.env.NODE_DATABASE_URL
 });
 
-module.exports = sequelize;
+const db = {};
+
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+
+// Models/tables
+db.users = require('../models/user.js')(sequelize, Sequelize);
+
+module.exports = db;
