@@ -69,8 +69,7 @@ exports.update = (req, res) => {
     }else{
     //create User
     User.create({
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
+    
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8)
     })
