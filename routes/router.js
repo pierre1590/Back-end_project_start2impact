@@ -1,35 +1,19 @@
-const express = require('express');
-const { body,query } = require('express-validator/check');
-const router = express.Router();
-
-const authController = require('../controllers/auth.js');
-const User = require('../models/user');
-
-const isAuth = require('../middleware/is-auth.js');
-
-
-//POST /auth/register
-router.post('/register',
-    [
-        body('email').isEmail().withMessage('')
-        .custom((value,{ req }) => {
-            return User.findOne( { where : { email : value}}).then(user => {
-                if(user){
-                    return Promise.reject('Email Esistente!!!');
-                }
-            })
-        }),
-        body('password').trim().isLength({ min : 5}).withMessage('Password > 5 Caratteri'),
-    ],
-    authController.registerUser);
-
-router.post('/login',
-    [
-        body('email').isEmail().withMessage('Inserisci una mail valida name@server.com'),
-        body('password').trim().isLength({ min : 5}).withMessage('Password > 5 Caratteri')
-    ],
-   authController.loginUser);
-
-
-
-module.exports = router;
+const auth = require('../middleware/auth.js');
+module.exports = function(app) {
+    const users = require('../controller/user.controller.js');
+  
+    // Retrieve all User
+    app.get('/auth/users',auth, users.findAll);
+    // Retrieve a single User by Id
+    app.get('/auth/users/:userId', users.findById);
+    // Update a User with Id
+    app.put('/auth/users/:userId',auth, users.update);
+    // Delete a User with Id
+    app.delete('/auth/users/:userId',auth, users.delete);
+ 
+    // User signup
+    app.post('/auth/user/signup', users.signup);
+    
+    // User signin
+    app.post('/auth/user/signin', users.signin);
+}
