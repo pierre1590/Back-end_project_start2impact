@@ -1,9 +1,10 @@
 {
     "env" : {
-        "NODE_PORT" : "85",
+        "NODE_ENV" : "dev",
+        "NODE_PORT" : "8080",
         "NODE_DATABASE" : "authentication",
         "NODE_DATABASE_USER" : "root",
         "NODE_DATABASE_PW" : "",
-        "NODE_DATABASE_URL" : "localhost"
+        "NODE_DATABASE_URL" : "localhost" 
     }
 }

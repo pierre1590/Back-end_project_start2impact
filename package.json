@@ -4,19 +4,35 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pierre1590/Back-end_project_start2impact.git"
+  },
+  "keywords": [
+    "back-end",
+    "project",
+    "jwt",
+    "nodejs",
+    "express",
+    "bcrypt",
+    "mysql"
+  ],
   "author": "Piero Sabino",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pierre1590/Back-end_project_start2impact/issues"
+  },
+  "homepage": "https://github.com/pierre1590/Back-end_project_start2impact#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "express-validator": "^6.13.0",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3-rc.0",
+    "nodemon": "^2.0.15",
     "sequelize": "^6.9.0"
   }
 }
