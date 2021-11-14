@@ -11,9 +11,9 @@ const isAuth = require('../middleware/is-auth');
 //POST /auth/register
 router.post('/register',
     [
-        body('first_name').trim().isLength({min:5}).withMessage('First name is required and must be greater than five characters'),
-        body('last_name').trim().isLength({min:5}).withMessage('Last name is required and must be greater than five characters'),
-        body('username').trim().isLength({min:5}).withMessage('Username is required and must be greater than five characters')
+        body('first_name').trim().not().isEmpty().isLength({min:5}).withMessage('First name is required and must be greater than five characters'),
+        body('last_name').trim().not().isEmpty().isLength({min:5}).withMessage('Last name is required and must be greater than five characters'),
+        body('username').trim().not().isEmpty().isLength({min:5}).withMessage('Username is required and must be greater than five characters')
             .custom((value,{req}) => {
                 return User.findOne({ where:{username:value}}).then(user => {
                     if(user){
