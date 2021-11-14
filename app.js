@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const sequelize = require('./utils/database');
+const routes = require('./routes/index');
 
 const app = express();
 
@@ -16,10 +17,9 @@ app.use((req,res,next) => {
 });
 
 //Routing
-app.use('/',router);
-//require("./routes")(app);
+app.use('/',routes);
 
-app.post('/auth/register');
+
 
 
 
@@ -37,4 +37,4 @@ sequelize.authenticate().then( rec => {
      console.log('Connession al DB Error:',err);
 });
 
-app.listen(process.env.PORT || 5000);
+app.listen(process.env.PORT || 85);

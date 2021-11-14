@@ -41,7 +41,6 @@ router.post('/login',
     ],
    authController.loginUser);
 
-//POST /auth/me
-router.get('/me',isAuth,authController.loginMe);
+
 
 module.exports = router;

@@ -1,7 +1,7 @@
 {
     "env" : {
+        "NODE_PORT": "85",
         "NODE_ENV" : "dev",
-        "NODE_PORT" : "8081",
         "NODE_DATABASE" : "authentication",
         "NODE_DATABASE_USER" : "root",
         "NODE_DATABASE_PW" : "",

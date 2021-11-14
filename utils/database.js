@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+const {Sequelize} = require('sequelize');
 
 const sequelize = new Sequelize(process.env.NODE_DATABASE,
     process.env.NODE_DATABASE_USER,
