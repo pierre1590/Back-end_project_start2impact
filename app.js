@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const sequelize = require('./utils/database');
-const routes = require('./routes/index');
+const routes = require('./routes/auth.js');
 
 const app = express();
 
@@ -17,8 +17,7 @@ app.use((req,res,next) => {
 });
 
 //Routing
-app.use('/',routes);
-
+app.use('/auth',routes);
 
 
 
@@ -37,4 +36,4 @@ sequelize.authenticate().then( rec => {
      console.log('Connession al DB Error:',err);
 });
 
-app.listen(process.env.PORT || 85);
+app.listen(process.env.PORT || 8080);

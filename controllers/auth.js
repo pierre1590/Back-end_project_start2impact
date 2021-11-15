@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 
-
 // Login
 exports.loginUser = (req,res,next) => {
     const errors = validationResult(req);
@@ -81,7 +80,7 @@ exports.registerUser = (req,res,next) => {
         User.create({first_name : first_name,last_name : last_name,username : username,email : email,password : hashedPassword})
         .then(user => {
             res.status(201).json({ 
-                messages : 'Success Operation',
+                messages : 'User registration successful',
                 user : user
             });
         })
