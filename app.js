@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const sequelize = require('./utils/database');
-const routes = require('./routes/auth.js');
 
 const app = express();
 
@@ -17,7 +16,9 @@ app.use((req,res,next) => {
 });
 
 //Routing
-app.use('/auth',routes);
+app.use('/',router);
+require('./routes/index')(app);
+
 
 
 

@@ -5,7 +5,7 @@ const router = express.Router();
 const authController = require('../controllers/auth');
 const User = require('../models/user');
 
-const isAuth = require('../middleware/is-auth');
+
 
 
 //POST /auth/register
