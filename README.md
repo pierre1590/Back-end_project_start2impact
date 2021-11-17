@@ -62,6 +62,7 @@ The project consists in creating three end-points or APIs, one endpoint allows t
 - Node.js
 - MySQL
 - Sequelize
+- Json Web Tokens
 
 
 ## Framework
