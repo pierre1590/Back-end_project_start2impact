@@ -56,7 +56,12 @@ exports.loginUser = (req,res,next) => {
 
 };
 
-
+// Logout
+exports.logoutUser = (req,res,next) => {
+    res.status(200).json({  
+        message : 'You are logged out'
+    });
+}
 // Register
 exports.registerUser = (req,res,next) => {
     const errors = validationResult(req);
@@ -95,4 +100,4 @@ exports.registerUser = (req,res,next) => {
             message : err
         });
     });
-};
+}
