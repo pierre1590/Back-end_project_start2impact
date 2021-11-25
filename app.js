@@ -17,7 +17,7 @@ app.use((req,res,next) => {
 
 //Routing
 app.use('/',router);
-require('./routes/index')(app);
+require('./routes')(app);
 
 const Post = require('./models/post');
 const User = require('./models/user');

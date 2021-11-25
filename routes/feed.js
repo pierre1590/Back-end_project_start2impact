@@ -37,12 +37,11 @@ var upload = multer({
 // POST /feed/posts 
 var imgUpload = upload.single('image');
 router.post('/posts',
-    imgUpload,
+    [isAuth,imgUpload],
     [
         body('title').trim().not().isEmpty().isLength({min:5}).withMessage('Title is required and must be greater than five characters'),      
         body('description').trim().not().isEmpty().isLength({min:5}).withMessage('Description is required and must be greater than five characters')
     ],
-    isAuth,
     feedController.createPost);
 
 // UPDATE /feed/posts/:postId
