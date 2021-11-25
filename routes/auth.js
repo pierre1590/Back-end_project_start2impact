@@ -41,6 +41,7 @@ router.post('/login',
     ],
    authController.loginUser);
 
+
 // DELETE /auth/logout
 router.delete('/logout',authController.logoutUser);
 

@@ -19,6 +19,13 @@ app.use((req,res,next) => {
 app.use('/',router);
 require('./routes/index')(app);
 
+const Post = require('./models/post');
+const User = require('./models/user');
+
+User.hasMany(Post);
+Post.belongsTo(User, {constraints: true, onDelete: 'CASCADE'});
+
+User.belongsToMany(Post, {through: 'user_post'});
 
 
 

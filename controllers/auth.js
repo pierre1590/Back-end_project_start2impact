@@ -5,6 +5,52 @@ const User = require('../models/user');
 
 
 
+// Login ME
+exports.loginMe = async (req,res,next) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(422).json({
+            message : 'Error input parameters',
+            error : errors.array()
+        });
+    }
+    const email = req.body.email;
+    const password = req.body.password;
+    try {
+        const user = await User.findOne({
+            where : {
+                email : email
+            }
+        });
+        if(!user){
+            return res.status(422).json({
+                message : 'User not found'
+            });
+        }
+        const isMatch = await bcrypt.compare(password,user.password);
+        if(!isMatch){
+            return res.status(422).json({
+                message : 'Invalid password'
+            });
+        }
+        const token = jwt.sign({
+            userId : user.id,
+            email : user.email
+        },'Bd7uu0JMIsaOerYpUmrLMZFiUyieQzRi',{
+            expiresIn : '1h'   
+        });
+        res.status(200).json({
+            message : 'User logged in',
+            token : token,
+            user : user
+        });
+    } catch (err) {
+        return res.status(422).json({
+            message : err
+        });
+    }
+}
+
 // Login with try/catch and async/await
 exports.loginUser = async (req,res,next) => {
     const errors = validationResult(req);
