@@ -4,8 +4,9 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 
-// Login
-exports.loginUser = (req,res,next) => {
+
+// Login with try/catch and async/await
+exports.loginUser = async (req,res,next) => {
     const errors = validationResult(req);
 
     if(!errors.isEmpty()){
@@ -20,16 +21,14 @@ exports.loginUser = (req,res,next) => {
 
     let loginUser;
 
-    User.findOne( { where : { email : email}}).then(user => {
-        if(!user){
+    try {
+        loginUser = await User.findOne( { where : { email : email}});
+        if(!loginUser){
             return res.status(401).json({
                 message : 'Unauthorized, Wrong Email !!!'
             });
         }
-        loginUser = user;
-        return bcrypt.compare(password,user.password);
-    })
-    .then(isEqual => {
+        const isEqual = await bcrypt.compare(password,loginUser.password);
         if(!isEqual){
             return res.status(401).json({
                 message : 'Unauthorized, Wrong Password !!!'
@@ -39,31 +38,53 @@ exports.loginUser = (req,res,next) => {
             {
                 id : loginUser.id,
                 email : loginUser.email,
-                name : loginUser.name
+                first_name : loginUser.first_name
             },'Bd7uu0JMIsaOerYpUmrLMZFiUyieQzRi',{expiresIn : '1h'});
 
         res.status(201).json({ 
             messages : 'You are logged in',
             id : loginUser.id,
+            Firstname : loginUser.first_name,
+            Lastname : loginUser.last_name,
+            username : loginUser.username,
             token : token,
         });
-    })
-    .catch(err => {
+    } catch (err) {
         return res.status(422).json({
             message : err
         });
-    });
-
+    }
 };
 
-// Logout
-exports.logoutUser = (req,res,next) => {
-    res.status(200).json({  
-        message : 'You are logged out'
-    });
-}
-// Register
-exports.registerUser = (req,res,next) => {
+// Logout User
+ exports.logoutUser = async(req,res,next) => {
+   //retrieve the user id and delete the token
+    const userId = req.userId;
+    const token = req.token;
+    try {
+        await User.update({
+            token : null
+        },{
+            where : {
+                id : userId
+            }
+        });
+        res.status(200).json({
+            message : 'You are logged out!'
+        });
+    }
+    catch (err) {
+        return res.status(422).json({
+            message : err
+        });
+    }
+};
+        
+  
+
+
+// Register with try/catch and async/await
+exports.registerUser = async (req,res,next) => {
     const errors = validationResult(req);
 
     if(!errors.isEmpty()){
@@ -72,32 +93,28 @@ exports.registerUser = (req,res,next) => {
             error : errors.array()
         });
     }
-
-
     const first_name = req.body.first_name;
     const last_name = req.body.last_name;
     const username = req.body.username;
     const email = req.body.email;
     const password = req.body.password;
 
-    bcrypt.hash(password,12)
-    .then(hashedPassword => {
-        User.create({first_name : first_name,last_name : last_name,username : username,email : email,password : hashedPassword})
-        .then(user => {
-            res.status(201).json({ 
-                messages : 'User registration successful',
-                user : user
-            });
-        })
-        .catch(err => {
-            return res.status(422).json({
-                message : err
-            });
+    try {
+        const hashedPassword = await bcrypt.hash(password,12);
+        const newUser = await User.create({
+            first_name : first_name,
+            last_name:last_name,
+            username : username,
+            email : email,
+            password : hashedPassword
         });
-    })
-    .catch(err => {
-        return res.status(422).json({
+        res.status(201).json({
+            message : 'User created successfully',
+            user : newUser
+        });
+    } catch (err) {
+        res.status(422).json({
             message : err
         });
-    });
+    }
 }
