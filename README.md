@@ -16,7 +16,7 @@
 </details>
 
 ## About the project
-The project consists in the creation of 7 APIs or endpoints, three for authentication and logout; and the other 4 allow a user to create, edit, delete or view all posts.
+The project consists in the creation of 7 APIs or endpoints, three for registration, login and logout; and the other 4 allow a user to create, edit, delete or view all posts.
 
 # APIs
 ## APIs for registration, login and logout
