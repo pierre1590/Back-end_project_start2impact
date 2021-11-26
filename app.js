@@ -23,10 +23,8 @@ const Post = require('./models/post');
 const User = require('./models/user');
 
 User.hasMany(Post);
-Post.belongsTo(User,);
+Post.belongsTo(User);
 
-User.belongsToMany(Post,{through:'user_post'});
-Post.belongsToMany(User,{through:'user_post'});
 
 
 

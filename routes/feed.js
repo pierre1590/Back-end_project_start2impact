@@ -22,7 +22,7 @@ const fileFilter = (req,file,cb) => {
     if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg'){
         cb(null,true);
     }else{
-        req.fileValidationError = 'Invalid file type';
+        req.fileValidationError = 'Extension not allowed only: image/png | image/jpg |  image/jpeg';
         cb(null,false);
     }
 };
@@ -37,24 +37,20 @@ var upload = multer({
 // POST /feed/posts 
 var imgUpload = upload.single('image');
 router.post('/posts',
-    [isAuth,imgUpload],
+    isAuth,
+    imgUpload,
     [
     body('title').trim()
     .isLength({min:5}).withMessage('Title must be at least 5 characters long'),
     body('description').trim()
     .isLength({ min : 5}).withMessage('Description must be at least 5 characters long'),
-    body('image').custom((value,{req}) => {
-        if(req.fileValidationError){
-            throw new Error(req.fileValidationError);
-        }
-        return true;
-    })
     ],
     feedController.createPost);
 
 // UPDATE /feed/posts/:postId
 router.put('/posts/:postId',
     isAuth,
+    imgUpload,
     [
         body('title').trim()
         .isLength({min:5}).withMessage('Title must be at least 5 characters long'),
@@ -72,7 +68,6 @@ router.delete('/posts/:postId',
 router.get('/posts',
     [isAuth],
     feedController.getAllPosts);
-
 
 
     module.exports = router;

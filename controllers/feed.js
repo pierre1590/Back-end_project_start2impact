@@ -7,8 +7,9 @@ const fs = require("fs");
 const Post = require("../models/post");
 const User = require("../models/user");
 
+
 exports.createPost = async (req, res, next) => {
-  console.log(userId);
+ 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({
@@ -17,46 +18,51 @@ exports.createPost = async (req, res, next) => {
     });
   }
 
-  if (!req.file) {
+  if(!req.file){
     return res.status(422).json({
-      message: req.file.validationResult
-        ? req.file.validationResult
-        : "No images attached",
+        message : req.fileValidationError ? req.fileValidationError : 'No images attached...'
     });
-  }
-
+}
   const title = req.body.title;
   const image = req.file.path.replace(/\\/g, "/");
   const description = req.body.description;
-   
+  const userId = req.user.id;
+  //Use try/catch to save post with userId and image
   try {
     const post = await Post.create({
-     
       title: title,
       image: image,
       description: description,
+      userId: userId,
     });
     res.status(201).json({
-      message: "Post created",
+      message: "Post created successfully",
       post: post,
     });
   } catch (err) {
-    return res.status(422).json({
-      message: "Oops, something went wrong",
-    });
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
   }
 };
 
+
+
+  
+
 //DELETE A POST BY USER
 exports.deletePost = async (req, res, next) => {
-  const postId = req.params.postId;
+
+  
+const postId = req.params.postId;
   try {
     const post = await Post.findOne({
       where: {
         id: postId,
       },
     });
-    if (post.userId !== req.userId) {
+    if (post.userId !== req.user.id) {
       return res.status(422).json({
         message: "You are not authorized to delete this post",
       });
@@ -74,9 +80,22 @@ exports.deletePost = async (req, res, next) => {
 
 // UPDATE A POST BY USER
 exports.updatePost = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({
+      message: "Error input parameters",
+      error: errors.array(),
+    });
+  }
+
+  if(!req.file){
+    return res.status(422).json({
+        message : req.fileValidationError ? req.fileValidationError : 'No images attached...'
+    });
+}
   const postId = req.params.postId;
   const title = req.body.title;
-  const image = req.body.image;
+  const image = req.file.path.replace(/\\/g, "/");
   const description = req.body.description;
   try {
     const post = await Post.findOne({
@@ -84,7 +103,7 @@ exports.updatePost = async (req, res, next) => {
         id: postId,
       },
     });
-    if (post.userId !== req.userId) {
+    if (post.userId !== req.user.id) {
       return res.status(422).json({
         message: "You are not authorized to update this post",
       });
@@ -109,12 +128,12 @@ exports.updatePost = async (req, res, next) => {
 exports.getAllPosts = async (req, res, next) => {
   try {
     const posts = await Post.findAll({
-      include: [
+       include: [
         {
           model: User,
           attributes: ["id", "first_name", "last_name", "username", "email"],
         },
-      ],
+      ], 
     });
     res.status(200).json({
       message: "All posts",
@@ -127,27 +146,4 @@ exports.getAllPosts = async (req, res, next) => {
   }
 };
 
-// GET ALL POSTS BY ME
-exports.getAllPostsByMe = async (req, res, next) => {
-  try {
-    const posts = await Post.findAll({
-      where: {
-        userId: req.userId,
-      },
-      include: [
-        {
-          model: User,
-          attributes: ["id", "first_name", "last_name", "username", "email"],
-        },
-      ],
-    });
-    res.status(200).json({
-      message: "All posts by me",
-      posts: posts,
-    });
-  } catch (err) {
-    return res.status(422).json({
-      message: err,
-    });
-  }
-};
+
