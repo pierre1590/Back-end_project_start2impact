@@ -82,6 +82,7 @@ The project consists in the creation of 7 APIs or endpoints, three for registrat
 
 ## Built with 
 - Body-parser
+- Express-validator
 - Node.js
 - MySQL
 - Sequelize
