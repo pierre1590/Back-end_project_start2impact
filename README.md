@@ -69,7 +69,7 @@ The project consists in the creation of 7 APIs or endpoints, three for authentic
     }
 }
 ```
-5) In the root folder, cerate a directory named <code>Public</code> and in this last folder create another folder called <code>img</code>  to allocate the images.
+5) In the root folder, create a directory named <code>Public</code> and in this last folder create another folder called <code>img</code>  to allocate the images.
 
 6) Install project dependencies :
 ```
