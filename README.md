@@ -86,6 +86,8 @@ The project consists in the creation of 7 APIs or endpoints, three for authentic
 - Sequelize
 - JSON Web Tokens
 - Bcryptjs
+- Multer
+- uuid
 
 
 ## Framework
