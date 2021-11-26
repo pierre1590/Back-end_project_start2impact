@@ -81,6 +81,7 @@ The project consists in the creation of 7 APIs or endpoints, three for registrat
 ```
 
 ## Built with 
+- Body-parser
 - Node.js
 - MySQL
 - Sequelize
@@ -88,6 +89,7 @@ The project consists in the creation of 7 APIs or endpoints, three for registrat
 - Bcryptjs
 - Multer
 - uuid
+- nodemon
 
 
 ## Framework
