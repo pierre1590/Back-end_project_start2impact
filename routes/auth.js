@@ -45,4 +45,6 @@ router.post('/login',
 // DELETE /auth/logout
 router.delete('/logout',authController.logoutUser);
 
+
+
 module.exports = router;

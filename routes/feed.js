@@ -39,33 +39,40 @@ var imgUpload = upload.single('image');
 router.post('/posts',
     [isAuth,imgUpload],
     [
-        body('title').trim().not().isEmpty().isLength({min:5}).withMessage('Title is required and must be greater than five characters'),      
-        body('description').trim().not().isEmpty().isLength({min:5}).withMessage('Description is required and must be greater than five characters')
+    body('title').trim()
+    .isLength({min:5}).withMessage('Title must be at least 5 characters long'),
+    body('description').trim()
+    .isLength({ min : 5}).withMessage('Description must be at least 5 characters long'),
+    body('image').custom((value,{req}) => {
+        if(req.fileValidationError){
+            throw new Error(req.fileValidationError);
+        }
+        return true;
+    })
     ],
     feedController.createPost);
 
 // UPDATE /feed/posts/:postId
 router.put('/posts/:postId',
-    [
-        body('title').trim().not().isEmpty().isLength({min:5}).withMessage('Title is required and must be greater than five characters'),       
-        body('description').trim().not().isEmpty().isLength({min:5}).withMessage('Description is required and must be greater than five characters')
-    ],
     isAuth,
+    [
+        body('title').trim()
+        .isLength({min:5}).withMessage('Title must be at least 5 characters long'),
+        body ('description').trim()
+        .isLength({ min : 5}).withMessage('Description must be at least 5 characters long'), 
+    ],
     feedController.updatePost);
 
 // DELETE /feed/posts/:postId
 router.delete('/posts/:postId', 
-    isAuth,
+    isAuth,    
     feedController.deletePost);
 
 // GET All /feed/posts
 router.get('/posts',
-    isAuth,
+    [isAuth],
     feedController.getAllPosts);
 
-// GET ALL /feed/posts by me 
-router.get('/posts/me',
-    isAuth,
-    feedController.getAllPostsByMe);
+
 
     module.exports = router;

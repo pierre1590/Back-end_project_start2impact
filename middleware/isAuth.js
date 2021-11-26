@@ -20,6 +20,7 @@ let decode;
 
 try{
     decode = jwt.verify(token, 'Bd7uu0JMIsaOerYpUmrLMZFiUyieQzRi');
+    console.log(decode);
 } catch(err){
     return res.status(500).json({
         message: err

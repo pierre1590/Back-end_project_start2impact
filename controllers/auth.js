@@ -4,54 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 
-
-// Login ME
-exports.loginMe = async (req,res,next) => {
-    const errors = validationResult(req);
-    if(!errors.isEmpty()){
-        return res.status(422).json({
-            message : 'Error input parameters',
-            error : errors.array()
-        });
-    }
-    const email = req.body.email;
-    const password = req.body.password;
-    try {
-        const user = await User.findOne({
-            where : {
-                email : email
-            }
-        });
-        if(!user){
-            return res.status(422).json({
-                message : 'User not found'
-            });
-        }
-        const isMatch = await bcrypt.compare(password,user.password);
-        if(!isMatch){
-            return res.status(422).json({
-                message : 'Invalid password'
-            });
-        }
-        const token = jwt.sign({
-            userId : user.id,
-            email : user.email
-        },'Bd7uu0JMIsaOerYpUmrLMZFiUyieQzRi',{
-            expiresIn : '1h'   
-        });
-        res.status(200).json({
-            message : 'User logged in',
-            token : token,
-            user : user
-        });
-    } catch (err) {
-        return res.status(422).json({
-            message : err
-        });
-    }
-}
-
-// Login with try/catch and async/await
+// Login USER
 exports.loginUser = async (req,res,next) => {
     const errors = validationResult(req);
 
@@ -82,13 +35,13 @@ exports.loginUser = async (req,res,next) => {
         }
         const token = jwt.sign(
             {
-                id : loginUser.id,
+                userId : loginUser.id,
                 email : loginUser.email,
             },'Bd7uu0JMIsaOerYpUmrLMZFiUyieQzRi',{expiresIn : '1h'});
 
         res.status(201).json({ 
             messages : 'You are logged in',
-            id : loginUser.id,
+            userId : loginUser.id,
             Firstname : loginUser.first_name,
             Lastname : loginUser.last_name,
             username : loginUser.username,
@@ -139,6 +92,7 @@ exports.registerUser = async (req,res,next) => {
             error : errors.array()
         });
     }
+    const userId = req.body.userId;
     const first_name = req.body.first_name;
     const last_name = req.body.last_name;
     const username = req.body.username;
@@ -148,6 +102,7 @@ exports.registerUser = async (req,res,next) => {
     try {
         const hashedPassword = await bcrypt.hash(password,12);
         const newUser = await User.create({
+            userId : userId,
             first_name : first_name,
             last_name:last_name,
             username : username,
@@ -164,3 +119,5 @@ exports.registerUser = async (req,res,next) => {
         });
     }
 }
+
+

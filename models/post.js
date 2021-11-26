@@ -19,7 +19,7 @@ const Post = sequelize.define('post',{
     }, 
     description : {
         type: Sequelize.STRING,
-        allowNull : true,
+        allowNull : false,
     },      
 });
 
