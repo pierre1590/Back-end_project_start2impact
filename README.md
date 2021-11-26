@@ -16,8 +16,10 @@
 </details>
 
 ## About the project
-The project consists in creating three end-points or APIs, one endpoint allows the registration of a user in a database, another allows to login and the last endpoint allows the logout.
-## APIs 
+The project consists in the creation of 7 APIs or endpoints, three for authentication and logout; and the other 4 allow a user to create, edit, delete or view all posts.
+
+# APIs
+## APIs for registration, login and logout
 - Registration :
 ```
 (Method:POST)   http://127.0.0.1:8080/auth/register
@@ -29,6 +31,24 @@ The project consists in creating three end-points or APIs, one endpoint allows t
 - Logout :
 ```
 (Method:DELETE) http://127.0.0.1:8080/auth/logout
+```
+
+## APIs for posts
+- Create a post :
+```
+(Method:POST)  http://127.0.0.1:8080/feed/posts
+```
+- Edit a post :
+```
+(Method:PUT)   http://127.0.0.1:8080/feed/posts/:id
+```
+- List all posts :
+```
+(Method:GET)   http://127.0.0.1:8080/feed/posts
+```
+- Delete a post :
+```
+(Method:DELETE) http://127.0.0.1:8080/feed/posts/:id
 ```
 ## Installation
 1) Clone the repo :
@@ -48,12 +68,14 @@ The project consists in creating three end-points or APIs, one endpoint allows t
         "NODE_DATABASE_URL" : "" 
     }
 }
+
+5) In the root folder, cerate a directory named <code>Public</code> and and in this last folder create another folder called <code>img</code>  to allocate the images..
 ```
-5) Install project dependencies :
+6) Install project dependencies :
 ```
      npm install 
 ```
-6) Start the server :
+7) Start the server :
 ```
      npm start
 ```
