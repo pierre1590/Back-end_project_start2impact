@@ -105,6 +105,7 @@ To verify that the end-points worked I used Talend API Tester - Free edition, bu
 http://localhost:port/
 ```
 4) Click on the "save" button and then on the "send" button.
+5) You will see the response.
 
 ## Contact
 
