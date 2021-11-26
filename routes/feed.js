@@ -68,3 +68,4 @@ router.get('/posts/me',
     isAuth,
     feedController.getAllPostsByMe);
 
+    module.exports = router;

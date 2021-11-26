@@ -5,7 +5,7 @@ module.exports = (req, res, next) => {
     console.log('Authorization middleware');
     console.log(req.get('Authorization'));
 
-    const auth = req.get('Authorization');
+    const auth = req.headers.authorization;
 
     if (!auth) {
         return res.status(401).json({

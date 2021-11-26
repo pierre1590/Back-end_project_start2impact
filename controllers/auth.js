@@ -84,7 +84,6 @@ exports.loginUser = async (req,res,next) => {
             {
                 id : loginUser.id,
                 email : loginUser.email,
-                first_name : loginUser.first_name
             },'Bd7uu0JMIsaOerYpUmrLMZFiUyieQzRi',{expiresIn : '1h'});
 
         res.status(201).json({ 
@@ -93,6 +92,7 @@ exports.loginUser = async (req,res,next) => {
             Firstname : loginUser.first_name,
             Lastname : loginUser.last_name,
             username : loginUser.username,
+            email : loginUser.email,
             token : token,
         });
     } catch (err) {

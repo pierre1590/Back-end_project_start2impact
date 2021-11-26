@@ -7,9 +7,8 @@ const fs = require('fs');
 const Post = require('../models/post');
 const User = require('../models/user');
 
-// CREATE A POST BY USER
-exports.createPost = async (req,res,next) => {
-    const errors = validationResult(req);
+ exports.createPost = async (req,res,next) => {
+     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.status(422).json({
             message : 'Error input parameters',
@@ -43,7 +42,7 @@ exports.createPost = async (req,res,next) => {
             message : 'Oops, something went wrong'
         });
     }
-}
+} 
 
 //DELETE A POST BY USER
 exports.deletePost = async (req,res,next) => {
