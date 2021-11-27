@@ -27,15 +27,12 @@ try{
     });
 }
 
-if(!decode) {
-    return res.status(401).json({
-        message: 'Invalid token.'
-    });
-}
 
-let userId = decode.userId;
-User.findByPk(userId)
-.then(user => {
+
+ let userId = decode.userId;
+
+   User.findByPk(userId)
+ .then(user => {
     if(!user) {
         return res.status(401).json({
             message: 'User not found.'
@@ -45,3 +42,4 @@ User.findByPk(userId)
     next();
 })
 };
+  
