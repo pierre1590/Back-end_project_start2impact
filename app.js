@@ -29,8 +29,26 @@ Post.belongsTo(User);
 
 
 
+//Use try...catch 
 
-sequelize.authenticate().then( rec => {
+sequelize.authenticate()
+try{
+    console.log('Connection Established Successfully');
+    //sequelize.sync({force:true})
+    sequelize.sync()
+            try{
+                console.log('Sync to DB with Success');
+            }
+            catch(err){
+                console.log('Sync to DB Error:',err);
+            }
+}catch(err){
+    console.log('Connection to DB Error:',err);
+}
+
+
+/*  sequelize.authenticate()
+ .then( rec => {
     console.log('Connessione Stabilita con Successo');
     //sequelize.sync({force:true})
     sequelize.sync()
@@ -41,6 +59,7 @@ sequelize.authenticate().then( rec => {
     });
 }).catch( err => {
      console.log('Connession al DB Error:',err);
-});
+}); */
 
 app.listen(process.env.PORT || 8080);
+ 
