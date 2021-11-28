@@ -7,7 +7,7 @@ const fs = require("fs");
 const Post = require("../models/post");
 const User = require("../models/user");
 
-
+// CREATE A POST
 exports.createPost = async (req, res, next) => {
  
   const errors = validationResult(req);
