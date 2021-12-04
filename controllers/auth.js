@@ -37,7 +37,7 @@ exports.loginUser = async (req,res,next) => {
             {
                 userId : loginUser.id,
                 email : loginUser.email,
-            },'Bd7uu0JMIsaOerYpUmrLMZFiUyieQzRi',{expiresIn : '1h'});
+            },process.env.SECRET_KEY,{expiresIn : '1h'});
 
         res.status(201).json({ 
             messages : 'You are logged in',

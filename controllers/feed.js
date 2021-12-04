@@ -63,7 +63,7 @@ const postId = req.params.postId;
       },
     });
     if (post.userId !== req.user.id) {
-      return res.status(422).json({
+      return res.status(401).json({
         message: "You are not authorized to delete this post",
       });
     }
@@ -104,7 +104,7 @@ exports.updatePost = async (req, res, next) => {
       },
     });
     if (post.userId !== req.user.id) {
-      return res.status(422).json({
+      return res.status(401).json({
         message: "You are not authorized to update this post",
       });
     }

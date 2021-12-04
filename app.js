@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const sequelize = require('./utils/database');
-
+require('dotenv').config();
 const app = express();
 
 
@@ -61,5 +61,5 @@ try{
      console.log('Connession al DB Error:',err);
 }); */
 
-app.listen(process.env.PORT || 8080);
+app.listen(process.env.PORT || 81);
  
