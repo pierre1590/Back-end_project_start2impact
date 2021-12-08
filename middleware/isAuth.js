@@ -19,7 +19,7 @@ const token = auth.split(' ')[1];
 let decode;
 
 try{
-    decode = jwt.verify(token, 'Bd7uu0JMIsaOerYpUmrLMZFiUyieQzRi');
+    decode = jwt.verify(token,process.env.SECRET_KEY );
     console.log(decode);
 } catch(err){
     return res.status(500).json({
